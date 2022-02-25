@@ -1,15 +1,17 @@
 <template>
   <v-app>
-    <a href="https://www.renacer.com.bo/obituariosDetalle.aspx?idObituario=53">Para ti!!</a>
+    <LocalPlayer/>
   </v-app>
 </template>
 
 <script>
 
+import LocalPlayer from './components/Player.vue';
+
 export default {
   name: 'App',
 
-  components: {},
+  components: { LocalPlayer },
 
   data: () => ({
     //

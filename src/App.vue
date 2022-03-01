@@ -8,17 +8,34 @@
               outlined
               dense
               multiple
-              label="Seleciona tus caciones"
+              label="Seleciona tus cacionesss"
               v-model="files"
-              @change="hola"
+              @change="upload"
               accept=".mp3"
               class="mt-5"
             ></v-file-input>
+            <v-list dense v-if="playList.length > 0">
+              <v-subheader>REPORTS</v-subheader>
+              <v-list-item-group
+                color="primary"
+              >
+                <v-list-item
+                  v-for="(item, i) in playList"
+                  :key="i"
+                  @click="playMusic(item)"
+                >
+                  <v-list-item-icon>
+                    <v-icon v-text="item.icon"></v-icon>
+                  </v-list-item-icon>
+                  <v-list-item-content>
+                    <v-list-item-title v-text="item.name"></v-list-item-title>
+                  </v-list-item-content>
+                </v-list-item>
+              </v-list-item-group>
+            </v-list>
           </v-col>
           <v-col sm="6">
-            <div v-if="play">
-              <audio controls :src="src"></audio>
-            </div>
+            <audio controls :src="src"></audio>
           </v-col>
         </v-row>
       </v-container>
@@ -32,16 +49,27 @@ export default {
 
   data: () => ({
     files: [],
-    play: false,
     src: null,
+    playList: [],
   }),
 
   methods: {
-    hola() {
-      this.src = URL.createObjectURL(this.files[0]);
-      console.log(this.src);
-      this.play = true;
+    upload() {
+      this.playList = [];
+      for (const p of this.files) {
+        const sound = {
+          name: p.name,
+          size: p.size,
+          type: p.type,
+          src: URL.createObjectURL(p),
+          icon: 'mdi-music-box-outline'
+        }
+        this.playList.push(sound);
+      }
     },
+    playMusic(item){
+      this.src = item.src;
+    }
   },
 };
 </script>

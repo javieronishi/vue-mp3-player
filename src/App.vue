@@ -35,7 +35,7 @@
             </v-list>
           </v-col>
           <v-col sm="6">
-            <audio controls :src="src"></audio>
+            <audio controls :src="src" :autoplay="autoplay"></audio>
           </v-col>
         </v-row>
       </v-container>
@@ -51,6 +51,7 @@ export default {
     files: [],
     src: null,
     playList: [],
+    autoplay: false,
   }),
 
   methods: {
@@ -69,6 +70,7 @@ export default {
     },
     playMusic(item){
       this.src = item.src;
+      this.autoplay = true;
     }
   },
 };

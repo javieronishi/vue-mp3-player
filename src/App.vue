@@ -16,9 +16,7 @@
             ></v-file-input>
             <v-list dense v-if="playList.length > 0">
               <v-subheader>REPORTS</v-subheader>
-              <v-list-item-group
-                color="primary"
-              >
+              <v-list-item-group color="primary">
                 <v-list-item
                   v-for="(item, i) in playList"
                   :key="i"
@@ -35,7 +33,12 @@
             </v-list>
           </v-col>
           <v-col sm="6">
-            <audio controls :src="src" :autoplay="autoplay"></audio>
+            <audio
+              controls
+              :src="src"
+              :autoplay="autoplay"
+              @ended="onEnd()"
+            ></audio>
           </v-col>
         </v-row>
       </v-container>
@@ -63,15 +66,18 @@ export default {
           size: p.size,
           type: p.type,
           src: URL.createObjectURL(p),
-          icon: 'mdi-music-box-outline'
-        }
+          icon: "mdi-music-box-outline",
+        };
         this.playList.push(sound);
       }
     },
-    playMusic(item){
+    playMusic(item) {
       this.src = item.src;
       this.autoplay = true;
-    }
+    },
+    onEnd: function () {
+      console.log("test on Ended");
+    },
   },
 };
 </script>

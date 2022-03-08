@@ -85,7 +85,7 @@
 </template>
 
 <script>
-import { CANCIONES } from "@/demo";
+// import { CANCIONES } from "@/demo";
 export default {
   name: "PlayList",
 
@@ -97,14 +97,21 @@ export default {
   }),
   created() {
     // this.playList = CANCIONES;
-    console.log(CANCIONES);
+    this.$bus.$on("next-track", (track) => {
+      console.log("escuchado desde playlist");
+      const next = this.playList[track.id + 1];
+      console.log(next);
+      this.selectTrack(next);
+    });
   },
 
   methods: {
     upload() {
       this.playList = [];
+      let id = 0;
       for (const p of this.files) {
         const sound = {
+          id,
           name: p.name.slice(0, -4),
           size: p.size,
           type: p.type,
@@ -113,6 +120,7 @@ export default {
           iconQueue: "mdi-playlist-music",
         };
         this.playList.push(sound);
+        id++;
       }
       this.selectSongs = false;
     },

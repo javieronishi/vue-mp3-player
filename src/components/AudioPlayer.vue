@@ -5,10 +5,13 @@
       <v-col cols="12" md="4" sm="4" xs="12">
         <audio
           controls
-          :src="src"
+          :src="track.src"
           :autoplay="autoplay"
           @ended="onEnd()"
         ></audio>
+        <marquee v-if="track.src">
+          <span class="white--text">🎼 🎼 {{ track.name }} 🎵</span>
+        </marquee>
       </v-col>
       <v-col cols="12" md="4" sm="4" xs="12"></v-col>
     </v-row>
@@ -19,9 +22,11 @@
 export default {
   name: "AudioPlayer",
   props: {
-    src: {
-      type: String,
-      default: null,
+    track: {
+      type: Object,
+      default: function () {
+        return { id: null, src: null, name: null };
+      },
     },
     autoplay: {
       type: Boolean,
@@ -32,8 +37,9 @@ export default {
   data: () => ({}),
 
   methods: {
-    onEnd: function () {
-      console.log("test on Ended");
+    onEnd() {
+      console.log("emitido desde audio player");
+      this.$bus.$emit("next-track", this.track);
     },
   },
 };

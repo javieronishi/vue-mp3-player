@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <AudioPlayer :src="src" :autoplay="autoplay" />
+    <AudioPlayer :track="track" :autoplay="autoplay" />
     <PlayList @select="playMusic" />
   </v-app>
 </template>
@@ -15,11 +15,16 @@ export default {
   data: () => ({
     src: null,
     autoplay: false,
+    track: {},
   }),
 
   methods: {
     playMusic(item) {
-      this.src = item.src;
+      this.track = {
+        id: item.id,
+        src: item.src,
+        name: item.name,
+      };
       this.autoplay = true;
     },
   },

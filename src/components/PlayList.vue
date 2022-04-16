@@ -4,42 +4,31 @@
       <v-col cols="12" md="4" sm="4" xs="12"></v-col>
       <v-col cols="12" md="4" sm="4" xs="12">
         <div v-if="playList.length === 0">
-          <v-alert dense text type="info" class="mt-5">
-            Que tal si seleccionas tus canciones favoritas
-          </v-alert>
           <div class="text-center">
-            <v-btn
-              class="mx-2"
-              small
-              fab
-              dark
-              color="grey darken-3"
-              @click="selectSongs = true"
-            >
-              <v-icon dark> mdi-plus </v-icon>
-            </v-btn>
+            <v-file-input
+              outlined
+              dense
+              multiple
+              v-model="files"
+              @change="upload"
+              accept=".mp3"
+              class="mt-5"
+              label="Selecciona tus canciones favoritas"
+              v-if="selectSongs"
+            ></v-file-input>
           </div>
         </div>
         <v-card elevation="2" outlined v-if="playList.length > 0" class="p-3">
           <v-list shaped dense class="list">
-            <v-list-item-group color="primary">
+            <v-list-item-group>
               <v-list-item v-for="(item, i) in playList" :key="i">
-                <v-list-item-content>
+                <v-list-item-content @click="selectTrack(item)">
                   <v-list-item-title v-text="item.name"></v-list-item-title>
                 </v-list-item-content>
                 <v-list-item-icon>
-                  <v-tooltip top>
-                    <template v-slot:activator="{ on, attrs }">
-                      <v-icon
-                        v-bind="attrs"
-                        v-on="on"
-                        @click="selectTrack(item)"
-                      >
-                        {{ item.iconPlay }}
-                      </v-icon>
-                    </template>
-                    <span>Reproducir</span>
-                  </v-tooltip>
+                  <v-icon @click="selectTrack(item)">
+                    {{ item.iconPlay }}
+                  </v-icon>
                   <v-tooltip top>
                     <template v-slot:activator="{ on, attrs }">
                       <v-icon
@@ -61,26 +50,6 @@
       </v-col>
       <v-col cols="12" md="4" sm="4" xs="12"></v-col>
     </v-row>
-    <v-dialog scrollable v-model="selectSongs" width="300">
-      <v-card>
-        <v-card-title class="grey lighten-2">
-          <h4>🎵🎵🎵🎵🎵</h4>
-        </v-card-title>
-        <v-card-text class="mt-5">
-          <v-file-input
-            outlined
-            dense
-            multiple
-            v-model="files"
-            @change="upload"
-            accept=".mp3"
-            class="mt-5"
-            label="Selecciona tus caciones"
-          ></v-file-input>
-        </v-card-text>
-        <v-divider></v-divider>
-      </v-card>
-    </v-dialog>
   </v-container>
 </template>
 
@@ -92,15 +61,15 @@ export default {
   data: () => ({
     files: [],
     playList: [],
-    selectSongs: false,
-    selectedItem: 1,
+    playListQueue: [],
+    selectSongs: true,
+    selectedItem: 0,
   }),
   created() {
     // this.playList = CANCIONES;
     this.$bus.$on("next-track", (track) => {
-      console.log("escuchado desde playlist");
-      const next = this.playList[track.id + 1];
-      console.log(next);
+      const nextId = this.playList.length === track.id + 1 ? 0 : track.id + 1;
+      const next = this.playList[nextId];
       this.selectTrack(next);
     });
   },
@@ -116,7 +85,7 @@ export default {
           size: p.size,
           type: p.type,
           src: URL.createObjectURL(p),
-          iconPlay: "mdi-play-box",
+          iconPlay: "mdi-play",
           iconQueue: "mdi-playlist-music",
         };
         this.playList.push(sound);
@@ -125,10 +94,18 @@ export default {
       this.selectSongs = false;
     },
     selectTrack(item) {
-      this.$emit("select", item);
+      // buscar si hay algo en la cola
+      let play = item;
+      if (this.playListQueue.length > 0) {
+        play = this.playListQueue[0];
+        this.playListQueue.shift();
+      }
+      this.$emit("select", play);
     },
     addToQueue(item) {
-      console.log(item);
+      this.playListQueue.push(item);
+      console.log(this.playListQueue.length);
+      console.log(this.playListQueue);
     },
   },
 };

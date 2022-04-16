@@ -2,6 +2,19 @@
   <v-app>
     <AudioPlayer :track="track" :autoplay="autoplay" />
     <PlayList @select="playMusic" />
+    <v-snackbar
+      v-model="snackbar"
+      :timeout="timeout"
+      rounded="pill"
+      color="info"
+      outlined
+      top
+      right
+      dense
+      class="text-caption"
+    >
+      {{ track.name }}
+    </v-snackbar>
   </v-app>
 </template>
 
@@ -16,6 +29,8 @@ export default {
     src: null,
     autoplay: false,
     track: {},
+    snackbar: false,
+    timeout: 3000,
   }),
 
   methods: {
@@ -26,6 +41,7 @@ export default {
         name: item.name,
       };
       this.autoplay = true;
+      this.snackbar = true;
     },
   },
 };

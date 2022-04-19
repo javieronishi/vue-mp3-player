@@ -2,15 +2,13 @@
   <v-app>
     <AudioPlayer :track="track" :autoplay="autoplay" />
     <PlayList @select="playMusic" />
+    <OptionsPlayer />
     <v-snackbar
       v-model="snackbar"
       :timeout="timeout"
-      rounded="pill"
       color="info"
-      outlined
       top
       right
-      dense
       class="text-caption"
     >
       {{ track.name }}
@@ -21,16 +19,17 @@
 <script>
 import AudioPlayer from "@/components/AudioPlayer.vue";
 import PlayList from "@/components/PlayList.vue";
+import OptionsPlayer from "@/components/OptionsPlayer.vue";
 
 export default {
   name: "App",
-  components: { AudioPlayer, PlayList },
+  components: { AudioPlayer, PlayList, OptionsPlayer },
   data: () => ({
     src: null,
     autoplay: false,
     track: {},
     snackbar: false,
-    timeout: 3000,
+    timeout: 4000,
   }),
 
   methods: {

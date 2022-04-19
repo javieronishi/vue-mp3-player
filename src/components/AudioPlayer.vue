@@ -1,21 +1,7 @@
 <template>
-  <v-container fluid>
-    <v-row no-gutters>
-      <v-col cols="12" md="4" sm="4" xs="12">
-        <!-- <v-switch
-          v-model="$vuetify.theme.dark"
-          inset
-          hint="Theme Dark"
-          dense
-          persistent-hint
-        ></v-switch> -->
-      </v-col>
-      <v-col cols="12" md="4" sm="4" xs="12">
-        <marquee v-if="track.src">
-          <span class="text-caption">
-            {{ track.name }}
-          </span>
-        </marquee>
+  <v-container fill-height fluid>
+    <v-row align="center" justify="center">
+      <v-col md="6" sm="6" xs="12">
         <audio
           controls
           :src="track.src"
@@ -23,7 +9,6 @@
           @ended="onEnd()"
         ></audio>
       </v-col>
-      <v-col cols="12" md="4" sm="4" xs="12"></v-col>
     </v-row>
   </v-container>
 </template>

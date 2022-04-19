@@ -31,8 +31,6 @@ export default {
   created() {
     this.$vuetify.theme.dark = true;
   },
-  data: () => ({}),
-
   methods: {
     onEnd() {
       this.$bus.$emit("next-track", this.track);

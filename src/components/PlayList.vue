@@ -11,15 +11,9 @@
             @change="upload"
             accept=".mp3"
             label="Selecciona tus canciones favoritas"
-            v-if="selectSongs"
           ></v-file-input>
         </template>
         <template v-if="playList.length > 0">
-          <marquee v-if="name">
-            <span class="text-caption">
-              {{ name }}
-            </span>
-          </marquee>
           <v-card outlined flat>
             <v-list shaped dense class="list">
               <v-list-item-group>
@@ -49,24 +43,44 @@
               </v-list-item-group>
             </v-list>
           </v-card>
+          <marquee v-if="name">
+            <span class="text-caption">
+              {{ name }}
+            </span>
+          </marquee>
+          <OptionsPlayer
+            @clear-play-list="clearPlayList"
+            :queue="playListQueue"
+          />
         </template>
       </v-col>
+      <v-snackbar
+        v-model="snackbar"
+        :timeout="timeout"
+        color="success"
+        dense
+        class="text-caption"
+      >
+        Se agrego a la cola: {{ name }}
+      </v-snackbar>
     </v-row>
   </v-container>
 </template>
 
 <script>
 // import { CANCIONES } from "@/demo";
+import OptionsPlayer from "@/components/OptionsPlayer.vue";
 export default {
   name: "PlayList",
-
+  components: { OptionsPlayer },
   data: () => ({
     files: [],
     playList: [],
     playListQueue: [],
-    selectSongs: true,
     selectedItem: 0,
     name: null,
+    snackbar: false,
+    timeout: 3000,
   }),
   created() {
     // this.playList = CANCIONES;
@@ -94,22 +108,26 @@ export default {
         this.playList.push(sound);
         id++;
       }
-      this.selectSongs = false;
     },
     selectTrack(item) {
-      // buscar si hay algo en la cola
-      let play = item;
-      if (this.playListQueue.length > 0) {
-        play = this.playListQueue[0];
-        this.playListQueue.shift();
+      if (this.playList.length > 0) {
+        let play = item;
+        if (this.playListQueue.length > 0) {
+          play = this.playListQueue[0];
+          this.playListQueue.shift();
+        }
+        this.$emit("select", play);
+        this.name = play.name;
       }
-      this.$emit("select", play);
-      this.name = play.name;
     },
     addToQueue(item) {
       this.playListQueue.push(item);
-      console.log(this.playListQueue.length);
-      console.log(this.playListQueue);
+      this.name = item.name;
+      this.snackbar = true;
+    },
+    clearPlayList() {
+      this.playList = [];
+      this.files = [];
     },
   },
 };

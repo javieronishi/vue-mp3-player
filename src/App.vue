@@ -1,7 +1,7 @@
 <template>
   <v-app>
     <AudioPlayer :track="track" :autoplay="autoplay" />
-    <PlayList @select="playMusic" />
+    <PlayList @select="playMusic" @stop="stopMusic" />
     <v-snackbar
       v-model="snackbar"
       :timeout="timeout"
@@ -38,6 +38,10 @@ export default {
       };
       this.autoplay = true;
       this.snackbar = true;
+    },
+    stopMusic() {
+      console.log("excuchando");
+      this.autoplay = false;
     },
   },
 };

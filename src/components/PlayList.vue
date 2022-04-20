@@ -51,6 +51,9 @@
           <OptionsPlayer
             @clear-play-list="clearPlayList"
             :queue="playListQueue"
+            @next="nextTrack"
+            @previous="previousTrack"
+            @stop="stopTrack"
           />
         </template>
       </v-col>
@@ -118,6 +121,21 @@ export default {
         }
         this.$emit("select", play);
         this.name = play.name;
+        this.selectedItem = play.id;
+      }
+    },
+    nextTrack() {
+      if (this.playList.length === this.selectedItem + 1) {
+        this.selectTrack(this.playList[0]);
+      } else {
+        this.selectTrack(this.playList[this.selectedItem + 1]);
+      }
+    },
+    previousTrack() {
+      if (this.selectedItem === 0) {
+        this.selectTrack(this.playList[this.playList.length - 1]);
+      } else {
+        this.selectTrack(this.playList[this.selectedItem - 1]);
       }
     },
     addToQueue(item) {
@@ -128,6 +146,9 @@ export default {
     clearPlayList() {
       this.playList = [];
       this.files = [];
+    },
+    stopTrack() {
+      this.$emit("stop");
     },
   },
 };

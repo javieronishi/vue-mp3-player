@@ -22,3 +22,11 @@ npm run lint
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
+
+<v-switch
+  v-model="$vuetify.theme.dark"
+  inset
+  hint="Theme Dark"
+  dense
+  persistent-hint
+></v-switch>

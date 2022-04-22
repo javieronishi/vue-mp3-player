@@ -12,8 +12,24 @@
             accept=".mp3"
             label="Selecciona tus canciones favoritas"
           ></v-file-input>
+          <v-alert
+            dense
+            text
+            border="left"
+            type="info"
+            color="white black--text"
+          >
+            Reproductor MP3 simple y elegante para el navegador. Desarrollado en
+            Vue.js
+          </v-alert>
         </template>
         <template v-if="playList.length > 0">
+          <ButtonsPlayer @next="nextTrack" @previous="previousTrack" />
+          <marquee v-if="name">
+            <span class="text-caption">
+              {{ name }}
+            </span>
+          </marquee>
           <v-card outlined flat>
             <v-list shaped dense class="list">
               <v-list-item-group>
@@ -43,28 +59,33 @@
               </v-list-item-group>
             </v-list>
           </v-card>
-          <marquee v-if="name">
-            <span class="text-caption">
-              {{ name }}
-            </span>
-          </marquee>
           <OptionsPlayer
             @clear-play-list="clearPlayList"
             :queue="playListQueue"
-            @next="nextTrack"
-            @previous="previousTrack"
-            @stop="stopTrack"
           />
         </template>
       </v-col>
       <v-snackbar
         v-model="snackbar"
         :timeout="timeout"
-        color="success"
-        dense
         class="text-caption"
+        color="white black--text"
+        dense
+        top
+        left
       >
-        Se agrego a la cola: {{ name }}
+        A la cola: {{ name }}
+        <template v-slot:action="{ attrs }">
+          <v-btn
+            small
+            color="black"
+            icon
+            @click="snackbar = false"
+            v-bind="attrs"
+          >
+            <v-icon>mdi-close</v-icon>
+          </v-btn>
+        </template>
       </v-snackbar>
     </v-row>
   </v-container>
@@ -73,9 +94,11 @@
 <script>
 // import { CANCIONES } from "@/demo";
 import OptionsPlayer from "@/components/OptionsPlayer.vue";
+import ButtonsPlayer from "@/components/ButtonsPlayer.vue";
+
 export default {
   name: "PlayList",
-  components: { OptionsPlayer },
+  components: { OptionsPlayer, ButtonsPlayer },
   data: () => ({
     files: [],
     playList: [],
@@ -146,9 +169,6 @@ export default {
     clearPlayList() {
       this.playList = [];
       this.files = [];
-    },
-    stopTrack() {
-      this.$emit("stop");
     },
   },
 };

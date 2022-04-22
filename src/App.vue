@@ -1,15 +1,27 @@
 <template>
   <v-app>
     <AudioPlayer :track="track" :autoplay="autoplay" />
-    <PlayList @select="playMusic" @stop="stopMusic" />
+    <PlayList @select="playMusic" />
     <v-snackbar
       v-model="snackbar"
       :timeout="timeout"
-      color="info"
+      color="white black--text"
       dense
-      class="text-caption"
+      top
+      right
     >
-      Reproduciendo: {{ track.name }}
+      {{ track.name }}
+      <template v-slot:action="{ attrs }">
+        <v-btn
+          small
+          color="black"
+          icon
+          @click="snackbar = false"
+          v-bind="attrs"
+        >
+          <v-icon>mdi-close</v-icon>
+        </v-btn>
+      </template>
     </v-snackbar>
   </v-app>
 </template>
@@ -38,10 +50,6 @@ export default {
       };
       this.autoplay = true;
       this.snackbar = true;
-    },
-    stopMusic() {
-      console.log("excuchando");
-      this.autoplay = false;
     },
   },
 };

@@ -30,34 +30,46 @@
               {{ name }}
             </span>
           </marquee>
-          <v-card outlined flat>
-            <v-list shaped dense class="list">
-              <v-list-item-group>
-                <v-list-item v-for="(item, i) in playList" :key="i">
-                  <v-list-item-content @click="selectTrack(item)">
-                    <v-list-item-title v-text="item.name"></v-list-item-title>
-                  </v-list-item-content>
-                  <v-list-item-icon>
-                    <v-icon @click="selectTrack(item)">
-                      {{ item.iconPlay }}
-                    </v-icon>
-                    <v-tooltip top>
-                      <template v-slot:activator="{ on, attrs }">
-                        <v-icon
-                          v-bind="attrs"
-                          v-on="on"
-                          @click="addToQueue(item)"
-                          class="ml-2"
-                        >
-                          {{ item.iconQueue }}
-                        </v-icon>
-                      </template>
-                      <span>Agregar a la cola</span>
-                    </v-tooltip>
-                  </v-list-item-icon>
-                </v-list-item>
-              </v-list-item-group>
-            </v-list>
+          <v-card outlined class="list pa-2">
+            <v-simple-table dense>
+              <template v-slot:default>
+                <thead>
+                  <tr>
+                    <th class="text-left">Lista de Reproducción</th>
+                    <th class="text-left"></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr v-for="(item, i) in playList" :key="i">
+                    <td
+                      width="85%"
+                      @click="selectTrack(item)"
+                      class="select-track"
+                    >
+                      {{ item.id + 1 }} - {{ item.name }}
+                    </td>
+                    <td width="15%">
+                      <v-icon @click="selectTrack(item)">
+                        {{ item.iconPlay }}
+                      </v-icon>
+                      <v-tooltip top>
+                        <template v-slot:activator="{ on, attrs }">
+                          <v-icon
+                            v-bind="attrs"
+                            v-on="on"
+                            @click="addToQueue(item)"
+                            class="ml-2"
+                          >
+                            {{ item.iconQueue }}
+                          </v-icon>
+                        </template>
+                        <span>Agregar a la cola</span>
+                      </v-tooltip>
+                    </td>
+                  </tr>
+                </tbody>
+              </template>
+            </v-simple-table>
           </v-card>
           <OptionsPlayer
             @clear-play-list="clearPlayList"
@@ -178,5 +190,8 @@ export default {
   max-height: 410px;
   overflow: scroll;
   overflow-x: hidden;
+}
+.select-track:hover {
+  cursor: pointer;
 }
 </style>

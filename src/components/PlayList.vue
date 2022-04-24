@@ -12,16 +12,6 @@
             accept=".mp3"
             label="Selecciona tus canciones favoritas"
           ></v-file-input>
-          <v-alert
-            dense
-            text
-            border="left"
-            type="info"
-            color="white black--text"
-          >
-            Reproductor MP3 simple y elegante para el navegador. Desarrollado en
-            Vue.js
-          </v-alert>
         </template>
         <template v-if="playList.length > 0">
           <ButtonsPlayer @next="nextTrack" @previous="previousTrack" />
@@ -42,13 +32,13 @@
                 <tbody>
                   <tr v-for="(item, i) in playList" :key="i">
                     <td
-                      width="85%"
+                      width="80%"
                       @click="selectTrack(item)"
-                      class="select-track"
+                      class="select-track text-caption"
                     >
                       {{ item.id + 1 }} - {{ item.name }}
                     </td>
-                    <td width="15%">
+                    <td width="20%" class="text-caption">
                       <v-icon @click="selectTrack(item)">
                         {{ item.iconPlay }}
                       </v-icon>
@@ -73,7 +63,9 @@
           </v-card>
           <OptionsPlayer
             @clear-play-list="clearPlayList"
+            @play-search="playSearch"
             :queue="playListQueue"
+            :playList="playList"
           />
         </template>
       </v-col>
@@ -184,6 +176,9 @@ export default {
       this.playList = [];
       this.files = [];
     },
+    playSearch(item) {
+      this.selectTrack(item);
+    }
   },
 };
 </script>

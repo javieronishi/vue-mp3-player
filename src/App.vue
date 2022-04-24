@@ -2,6 +2,7 @@
   <v-app :style="{ background: $vuetify.theme.themes[theme].bgprimary }">
     <AudioPlayer :track="track" :autoplay="autoplay" />
     <PlayList @select="playMusic" />
+    <Footer />
     <v-snackbar
       v-model="snackbar"
       :timeout="timeout"
@@ -23,16 +24,20 @@
         </v-btn>
       </template>
     </v-snackbar>
+    <v-btn color="bgsecondary white--text mt-1" absolute right fab small @click="goGithub">
+      <v-icon>mdi-github</v-icon>
+    </v-btn>
   </v-app>
 </template>
 
 <script>
 import AudioPlayer from "@/components/AudioPlayer.vue";
 import PlayList from "@/components/PlayList.vue";
+import Footer from "@/components/Footer.vue";
 
 export default {
   name: "App",
-  components: { AudioPlayer, PlayList },
+  components: { AudioPlayer, PlayList, Footer },
   data() {
     return {
       src: null,
@@ -53,6 +58,9 @@ export default {
       this.autoplay = true;
       this.snackbar = true;
     },
+    goGithub() {
+      window.location.href = "https://github.com/javieronishi/vue-mp3-player"
+    }
   },
   computed: {
     theme() {

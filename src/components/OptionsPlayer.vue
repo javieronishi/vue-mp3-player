@@ -1,7 +1,20 @@
 <template>
   <v-container>
-    <v-row>
-      <v-col>
+    <v-row no-gutters>
+      <v-col md="8">
+        <v-autocomplete
+          dense
+          placeholder="Buscar ....."
+          prepend-icon="mdi-text-search"
+          :items="items"
+          no-data-text="No existen canciones"
+          v-model="search"
+          item-text="name"
+          item-value="id"
+          @change="handleSelectionTrack"
+        ></v-autocomplete>
+      </v-col>
+      <v-col md="4" class="text-right">
         <v-btn small icon @click="clearPlayList">
           <v-icon>mdi-delete-sweep</v-icon>
         </v-btn>
@@ -63,10 +76,16 @@ export default {
       type: Array,
       default: () => [],
     },
+    playList: {
+      type: Array,
+      default: () => [],
+    },
   },
   data() {
     return {
       dialog: false,
+      items: this.playList,
+      search: null,
     };
   },
   methods: {
@@ -76,6 +95,12 @@ export default {
     viewQueue() {
       this.dialog = true;
     },
+    handleSelectionTrack() {
+      this.$nextTick(() => {
+        this.$emit("play-search", this.items[this.search]);
+        this.search = null;
+      });
+    }
   },
 };
 </script>

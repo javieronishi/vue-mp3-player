@@ -25,13 +25,13 @@
         </template>
         <template v-if="playList.length > 0">
           <ButtonsPlayer @next="nextTrack" @previous="previousTrack" />
-          <marquee v-if="name">
+          <marquee>
             <span class="text-caption">
-              {{ name }}
+              {{ name ? name : "No se está reproduciendo nada" }}
             </span>
           </marquee>
-          <v-card outlined class="list pa-2">
-            <v-simple-table dense>
+          <v-card outlined class="list pa-2 bgsecondary">
+            <v-simple-table dense class="bgsecondary">
               <template v-slot:default>
                 <thead>
                   <tr>
@@ -111,15 +111,17 @@ import ButtonsPlayer from "@/components/ButtonsPlayer.vue";
 export default {
   name: "PlayList",
   components: { OptionsPlayer, ButtonsPlayer },
-  data: () => ({
-    files: [],
-    playList: [],
-    playListQueue: [],
-    selectedItem: 0,
-    name: null,
-    snackbar: false,
-    timeout: 3000,
-  }),
+  data() {
+    return {
+      files: [],
+      playList: [],
+      playListQueue: [],
+      selectedItem: 0,
+      name: null,
+      snackbar: false,
+      timeout: 3000,
+    };
+  },
   created() {
     // this.playList = CANCIONES;
     this.$bus.$on("next-track", (track) => {

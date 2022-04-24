@@ -66,4 +66,18 @@ export default {
 audio {
   width: 100%;
 }
+audio::-webkit-media-controls-enclosure {
+  background-color: #273340;
+}
+audio::-webkit-media-controls-timeline {}
+audio::-webkit-media-controls-volume-control-container {}
+audio::-webkit-media-controls-volume-control-container.closed {}
+audio::-webkit-media-controls-volume-slider-container {}
+audio::-webkit-media-controls-volume-slider {}
+audio::-webkit-media-controls-seek-back-button {}
+audio::-webkit-media-controls-seek-forward-button {}
+audio::-webkit-media-controls-fullscreen-button {}
+audio::-webkit-media-controls-rewind-button {}
+audio::-webkit-media-controls-return-to-realtime-button {}
+audio::-webkit-media-controls-toggle-closed-captions-button {}
 </style>

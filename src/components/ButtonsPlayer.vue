@@ -1,13 +1,19 @@
 <template>
   <v-row>
     <v-col class="mb-3 text-center">
-      <v-btn small color="white black--text" fab @click="previousTrack">
+      <v-btn
+        class="ml-2"
+        small
+        color="bgsecondary white--text"
+        fab
+        @click="previousTrack"
+      >
         <v-icon>mdi-skip-previous</v-icon>
       </v-btn>
       <v-btn
         class="ml-2"
         small
-        color="white black--text"
+        color="bgsecondary white--text"
         fab
         @click="stopTrack"
       >
@@ -16,7 +22,7 @@
       <v-btn
         class="ml-2"
         small
-        color="white black--text"
+        color="bgsecondary white--text"
         fab
         @click="playTrack"
       >
@@ -25,7 +31,7 @@
       <v-btn
         class="ml-2"
         small
-        color="white black--text"
+        color="bgsecondary white--text"
         fab
         @click="pauseTrack"
       >
@@ -34,7 +40,7 @@
       <v-btn
         class="ml-2"
         small
-        color="white black--text"
+        color="bgsecondary white--text"
         fab
         @click="nextTrack"
       >
@@ -52,9 +58,11 @@ export default {
       default: () => [],
     },
   },
-  data: () => ({
-    dialog: false,
-  }),
+  data() {
+    return {
+      dialog: false,
+    };
+  },
   methods: {
     nextTrack() {
       this.$emit("next");

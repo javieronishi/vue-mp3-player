@@ -11,9 +11,9 @@
       </v-col>
     </v-row>
     <v-row justify="center">
-      <v-dialog v-model="dialog" persistent max-width="340">
-        <v-card outlined>
-          <v-card-title class="text-h6 grey darken-1 white--text">
+      <v-dialog v-model="dialog" persistent max-width="400">
+        <v-card outlined class="bgsecondary">
+          <v-card-title class="text-h6 bgprimary white--text">
             Cola de Reproducción
           </v-card-title>
           <v-card-text class="mt-4">
@@ -27,9 +27,15 @@
             >
               Cola de reproducción vacia
             </v-alert>
-            <p v-else class="text-caption" v-for="(item, i) in queue" :key="i">
-              {{ item.name }}
-            </p>
+            <v-simple-table dense class="bgsecondary">
+              <template v-slot:default>
+                <tbody>
+                  <tr v-for="(item, i) in queue" :key="i">
+                    <td>{{ i + 1 }} - {{ item.name }}</td>
+                  </tr>
+                </tbody>
+              </template>
+            </v-simple-table>
           </v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
@@ -58,9 +64,11 @@ export default {
       default: () => [],
     },
   },
-  data: () => ({
-    dialog: false,
-  }),
+  data() {
+    return {
+      dialog: false,
+    };
+  },
   methods: {
     clearPlayList() {
       this.$emit("clear-play-list");

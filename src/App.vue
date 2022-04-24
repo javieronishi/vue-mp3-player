@@ -1,5 +1,5 @@
 <template>
-  <v-app>
+  <v-app :style="{ background: $vuetify.theme.themes[theme].bgprimary }">
     <AudioPlayer :track="track" :autoplay="autoplay" />
     <PlayList @select="playMusic" />
     <v-snackbar
@@ -33,13 +33,15 @@ import PlayList from "@/components/PlayList.vue";
 export default {
   name: "App",
   components: { AudioPlayer, PlayList },
-  data: () => ({
-    src: null,
-    autoplay: false,
-    track: {},
-    snackbar: false,
-    timeout: 4000,
-  }),
+  data() {
+    return {
+      src: null,
+      autoplay: false,
+      track: {},
+      snackbar: false,
+      timeout: 4000,
+    };
+  },
 
   methods: {
     playMusic(item) {
@@ -50,6 +52,11 @@ export default {
       };
       this.autoplay = true;
       this.snackbar = true;
+    },
+  },
+  computed: {
+    theme() {
+      return this.$vuetify.theme.dark ? "dark" : "light";
     },
   },
 };

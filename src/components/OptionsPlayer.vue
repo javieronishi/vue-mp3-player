@@ -12,14 +12,15 @@
           item-text="name"
           item-value="id"
           @change="handleSelectionTrack"
+          item-color="primary"
         ></v-autocomplete>
       </v-col>
       <v-col md="4" class="text-right">
-        <v-btn small icon @click="clearPlayList">
-          <v-icon>mdi-delete-sweep</v-icon>
+        <v-btn small icon class="cyan--text mr-2" @click="clearPlayList">
+          <v-icon>mdi-playlist-remove</v-icon>
         </v-btn>
-        <v-btn small icon @click="viewQueue">
-          <v-icon>mdi-playlist-music</v-icon>
+        <v-btn small icon class="cyan--text mr-2" @click="viewQueue">
+          <v-icon>mdi-playlist-play</v-icon>
         </v-btn>
       </v-col>
     </v-row>
@@ -100,7 +101,7 @@ export default {
         this.$emit("play-search", this.items[this.search]);
         this.search = null;
       });
-    }
+    },
   },
 };
 </script>

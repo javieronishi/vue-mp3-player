@@ -4,7 +4,7 @@
       <v-btn
         class="ml-2"
         small
-        color="bgsecondary white--text"
+        color="bgsecondary cyan--text"
         fab
         @click="previousTrack"
       >
@@ -13,7 +13,7 @@
       <v-btn
         class="ml-2"
         small
-        color="bgsecondary white--text"
+        color="bgsecondary cyan--text"
         fab
         @click="stopTrack"
       >
@@ -22,7 +22,7 @@
       <v-btn
         class="ml-2"
         small
-        color="bgsecondary white--text"
+        color="bgsecondary cyan--text"
         fab
         @click="playTrack"
       >
@@ -31,7 +31,7 @@
       <v-btn
         class="ml-2"
         small
-        color="bgsecondary white--text"
+        color="bgsecondary cyan--text"
         fab
         @click="pauseTrack"
       >
@@ -40,7 +40,7 @@
       <v-btn
         class="ml-2"
         small
-        color="bgsecondary white--text"
+        color="bgsecondary cyan--text"
         fab
         @click="nextTrack"
       >

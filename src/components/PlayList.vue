@@ -16,7 +16,7 @@
         <template v-if="playList.length > 0">
           <ButtonsPlayer @next="nextTrack" @previous="previousTrack" />
           <marquee>
-            <span class="text-caption">
+            <span class="text-caption cyan--text">
               {{ name ? name : "No se está reproduciendo nada" }}
             </span>
           </marquee>
@@ -25,7 +25,7 @@
               <template v-slot:default>
                 <thead>
                   <tr>
-                    <th class="text-left">Lista de Reproducción</th>
+                    <th class="text-left cyan--text">Lista de Reproducción</th>
                     <th class="text-left"></th>
                   </tr>
                 </thead>
@@ -34,7 +34,7 @@
                     <td
                       width="80%"
                       @click="selectTrack(item)"
-                      class="select-track text-caption"
+                      class="select-track text-caption white--text"
                       :class="{ 'cyan--text': item.id === selectedItem }"
                     >
                       {{ item.id + 1 }} - {{ item.name }}

@@ -35,6 +35,7 @@
                       width="80%"
                       @click="selectTrack(item)"
                       class="select-track text-caption"
+                      :class="{ 'cyan--text': item.id === selectedItem }"
                     >
                       {{ item.id + 1 }} - {{ item.name }}
                     </td>
@@ -178,7 +179,7 @@ export default {
     },
     playSearch(item) {
       this.selectTrack(item);
-    }
+    },
   },
 };
 </script>

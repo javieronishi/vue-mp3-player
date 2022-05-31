@@ -4,46 +4,30 @@
       <v-btn
         class="ml-2"
         small
-        color="bgsecondary cyan--text"
+        color="primary"
         fab
         @click="previousTrack"
+        outlined
       >
         <v-icon>mdi-skip-previous</v-icon>
       </v-btn>
-      <v-btn
-        class="ml-2"
-        small
-        color="bgsecondary cyan--text"
-        fab
-        @click="stopTrack"
-      >
+      <v-btn class="ml-2" small color="primary" fab @click="stopTrack" outlined>
         <v-icon>mdi-stop</v-icon>
       </v-btn>
-      <v-btn
-        class="ml-2"
-        small
-        color="bgsecondary cyan--text"
-        fab
-        @click="playTrack"
-      >
+      <v-btn class="ml-2" small color="primary" fab @click="playTrack" outlined>
         <v-icon>mdi-play</v-icon>
       </v-btn>
       <v-btn
         class="ml-2"
         small
-        color="bgsecondary cyan--text"
+        color="primary"
         fab
         @click="pauseTrack"
+        outlined
       >
         <v-icon>mdi-pause</v-icon>
       </v-btn>
-      <v-btn
-        class="ml-2"
-        small
-        color="bgsecondary cyan--text"
-        fab
-        @click="nextTrack"
-      >
+      <v-btn class="ml-2" small color="primary" fab @click="nextTrack" outlined>
         <v-icon>mdi-skip-next</v-icon>
       </v-btn>
     </v-col>
